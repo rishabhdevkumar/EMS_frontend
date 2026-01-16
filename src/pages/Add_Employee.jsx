@@ -4,7 +4,7 @@ import Sidebar from "../component/Sidebar";
 import { addUser } from "../services/UserService";
 
 function Add_Employee() {
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [formData, setFormData] = useState({
     employeeId: "",
     name: "",
@@ -15,10 +15,10 @@ function Add_Employee() {
     salary: "",
     role: "",
     password: "",
-    phone: ""
+    phone: "",
   });
 
-  const handleChange = (e) => { 
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -36,13 +36,12 @@ function Add_Employee() {
         salary: formData.salary,
         phone: formData.phone,
         password: formData.password,
-        role: formData.role || "employee"
+        role: formData.role || "employee",
       };
 
       const res = await addUser(dataToSend);
       alert("Registered Successfully!");
       console.log(res.data);
-
     } catch (error) {
       console.log("API ERROR:", error);
       alert("Registration failed (Backend Error 500)");
@@ -50,153 +49,181 @@ function Add_Employee() {
   };
 
   return (
-    <div className="flex bg-sky-100 min-h-screen">
-      <Sidebar />
-      <div className="ml-60 w-full">
-        <AdminHeader />
+    <div className="min-h-screen bg-sky-100 flex">
+      {/* Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
-        <div className="bg-white p-6 shadow-md max-w-3xl mx-auto mt-6">
-          <h2 className="text-xl font-bold text-gray-700 mb-6">Add New Employee</h2>
+      {/* Main Content */}
+      <div className="flex-1 md:ml-60">
+        <AdminHeader setIsOpen={setIsSidebarOpen} />
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 md:p-6">
+          <div className="bg-white p-4 md:p-6 shadow-md max-w-3xl mx-auto rounded-lg">
+            <h2 className="text-xl font-bold text-gray-700 mb-6 text-center md:text-left">
+              Add New Employee
+            </h2>
 
-            <div>
-              <label className="block text-gray-700 font-medium">Role</label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md">
-                <option value="">Select role</option>
-                <option value="Employee">Employee</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Employee ID</label>
-              <input
-                type="text"
-                name="employeeId"
-                value={formData.employeeId}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder="EMP001"/>
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder="Enter name"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder="Enter email"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Date of Birth</label>
-              <input
-                type="date"
-                name="dob"
-                value={formData.dob}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Gender</label>
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-              >
-                <option value="">Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Department</label>
-              <select
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-              >
-                <option value="">Select department</option>
-                <option value="HR">HR</option>
-                <option value="Sales">Sales</option>
-                <option value="Finance">Finance</option>
-                <option value="Development">Development</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Salary</label>
-              <input
-                type="number"
-                name="salary"
-                value={formData.salary}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder="Enter salary"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder="Enter password"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">Phone</label>
-              <input
-                type="number"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-                placeholder="Enter phone"
-              />
-            </div>
-
-          </form>
-
-          <div className="mt-4 text-center">
-            <button
-              onClick={handleSubmit}
-              className="px-6 py-1 bg-teal-600 text-white font-bold rounded-md hover:bg-teal-800 transition"
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              Add Employee
-            </button>
-          </div>
+              {/* Role */}
+              <div>
+                <label className="block text-gray-700 font-medium">Role</label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                >
+                  <option value="">Select role</option>
+                  <option value="employee">Employee</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
 
+              {/* Employee ID */}
+              <div>
+                <label className="block text-gray-700 font-medium">
+                  Employee ID
+                </label>
+                <input
+                  type="text"
+                  name="employeeId"
+                  value={formData.employeeId}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                  placeholder="EMP001"
+                />
+              </div>
+
+              {/* Name */}
+              <div>
+                <label className="block text-gray-700 font-medium">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                  placeholder="Enter name"
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-gray-700 font-medium">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                  placeholder="Enter email"
+                />
+              </div>
+
+              {/* DOB */}
+              <div>
+                <label className="block text-gray-700 font-medium">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                />
+              </div>
+
+              {/* Gender */}
+              <div>
+                <label className="block text-gray-700 font-medium">Gender</label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                >
+                  <option value="">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {/* Department */}
+              <div>
+                <label className="block text-gray-700 font-medium">
+                  Department
+                </label>
+                <select
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                >
+                  <option value="">Select department</option>
+                  <option value="HR">HR</option>
+                  <option value="Sales">Sales</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Development">Development</option>
+                </select>
+              </div>
+
+              {/* Salary */}
+              <div>
+                <label className="block text-gray-700 font-medium">Salary</label>
+                <input
+                  type="number"
+                  name="salary"
+                  value={formData.salary}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                  placeholder="Enter salary"
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-gray-700 font-medium">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                  placeholder="Enter password"
+                />
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block text-gray-700 font-medium">Phone</label>
+                <input
+                  type="number"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                  placeholder="Enter phone"
+                />
+              </div>
+            </form>
+
+            {/* Button */}
+            <div className="mt-6 text-center">
+              <button
+                onClick={handleSubmit}
+                className="w-full md:w-auto px-8 py-2 bg-teal-600 text-white font-bold rounded-md hover:bg-teal-800 transition"
+              >
+                Add Employee
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,14 +1,12 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 
 function App() {
   return (
-    <div className="bg-black min-h-screen">
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+    <Layout />
+    </BrowserRouter>
   );
 }
 
