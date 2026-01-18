@@ -26,12 +26,12 @@ function Login() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("userName", user.name);
+      localStorage.setItem("user", JSON.stringify(user));
 
       if (role === "admin") {
         navigate("/admindashboard");
       } else {
-        navigate("/employee/dashboard");
+        navigate("/"); 
       }
     } catch (error) {
       console.error("LOGIN ERROR 👉", error);
@@ -43,54 +43,49 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900">
-      <div className="w-96 max-w-md rounded-lg shadow-xl p-6 border border-slate-800 bg-slate-800">
-        <header className="text-2xl text-purple-700 text-center mb-6 font-semibold">
+      <div className="w-96 rounded-lg shadow-xl p-6 border border-slate-800 bg-slate-800">
+        <h2 className="text-2xl text-purple-700 text-center mb-6 font-semibold">
           Login
-        </header>
+        </h2>
+
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-500 mb-1">
-              Email Id
+            <label className="block text-sm text-gray-400 mb-1">
+              Email
             </label>
             <input
-              placeholder="Enter Email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 text-gray-100 border border-slate-700 rounded-md focus:outline-none focus:ring-1 focus:ring-purple-200 bg-transparent"
+              className="w-full px-3 py-2 bg-transparent border border-slate-700 text-white rounded-md"
+              required
             />
           </div>
+
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-500 mb-1">
+            <label className="block text-sm text-gray-400 mb-1">
               Password
             </label>
             <input
-              placeholder="Enter Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-700 text-gray-100 rounded-md focus:outline-none focus:ring-1 focus:ring-purple-200 bg-transparent"
+              className="w-full px-3 py-2 bg-transparent border border-slate-700 text-white rounded-md"
+              required
             />
           </div>
-          <div className="mb-4 flex items-center justify-between">
-            <label className="inline-flex items-center text-sm text-gray-600">
-              <input type="checkbox" className="form-checkbox" />
-              <span className="ml-2">Remember Me</span>
-            </label>
-            <a href="#" className="text-gray-500 text-sm">
-              Forgot Password?
-            </a>
-          </div>
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-purple-800 py-2 text-white rounded-md hover:bg-purple-900 transition disabled:opacity-60"
+            className="w-full bg-purple-700 py-2 text-white rounded-md hover:bg-purple-800"
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>
-          <p className="text-gray-700 mt-4 text-sm text-center">
-            Create an Account?{" "}
-            <Link to="/register" className="text-gray-500 font-medium">
+
+          <p className="text-gray-400 mt-4 text-sm text-center">
+            New user?{" "}
+            <Link to="/register" className="text-purple-400">
               Register
             </Link>
           </p>

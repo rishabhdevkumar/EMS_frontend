@@ -20,6 +20,7 @@ function Register() {
       const dataToSend = {
         name: formData.name,
         email: formData.email,
+        phone: formData.phone,
         password: formData.password,
         role: "employee",
       };
