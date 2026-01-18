@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../component/Footer";
 import { addUser } from "../services/UserService";
 
 function Register() {
@@ -14,7 +13,6 @@ function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,12 +34,11 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-20 flex justify-center items-center bg-slate-900">
+    <div className="min-h-screen pt-32 pb-18 flex justify-center items-center bg-slate-900">
       <div className="w-96 bg-slate-800 rounded-lg shadow-lg p-6 border border-slate-800">
         <h2 className="text-2xl font-semibold text-center text-purple-700 mb-4">
           Create an Account
         </h2>
-
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-gray-500 font-bold">Full Name</label>
@@ -54,7 +51,6 @@ function Register() {
               placeholder="Enter your name"
             />
           </div>
-
           <div>
             <label className="block text-gray-500 font-bold">Email</label>
             <input
@@ -66,7 +62,6 @@ function Register() {
               placeholder="Enter your email"
             />
           </div>
-
           <div>
             <label className="block text-gray-500 font-bold">Phone</label>
             <input
@@ -78,7 +73,6 @@ function Register() {
               placeholder="Enter phone"
             />
           </div>
-
           <div>
             <label className="block text-gray-500 font-bold">Password</label>
             <input
@@ -90,14 +84,12 @@ function Register() {
               placeholder="Enter password"
             />
           </div>
-
           <button
             type="submit"
             className="w-full bg-purple-700 py-2 rounded-md text-white hover:bg-slate-600 transition"
           >
             Sign Up
           </button>
-
           <p className="text-center text-gray-700 text-sm">
             Already have an Account?{" "}
             <Link to="/login" className="text-gray-500 font-medium">

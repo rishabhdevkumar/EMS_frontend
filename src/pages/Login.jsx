@@ -22,12 +22,11 @@ function Login() {
 
     console.log("LOGIN RESPONSE 👉", res.data);
 
-    // ✅ CORRECT DESTRUCTURING
     const { token, role, user } = res.data.data;
 
     localStorage.setItem("token", token);
     localStorage.setItem("role", role);
-    localStorage.setItem("userName", user.name); // ✅ NOW WORKS
+    localStorage.setItem("userName", user.name); 
 
     if (role === "admin") {
       navigate("/admindashboard");
@@ -45,8 +44,8 @@ function Login() {
 
 
   return (
-    <div className="min-h-screen pt-32 pb-20 flex items-center justify-center bg-slate-900">
-      <div className="w-full max-w-md rounded-lg shadow-xl p-6 border border-slate-800 bg-slate-800">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900">
+      <div className="w-96 max-w-md rounded-lg shadow-xl p-6 border border-slate-800 bg-slate-800">
         <header className="text-2xl text-purple-700 text-center mb-6 font-semibold">
           Login
         </header>
