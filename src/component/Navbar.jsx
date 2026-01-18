@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaHome, FaBars, FaTimes } from "react-icons/fa";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 min-h-screen overflow-y-scroll ${
-        isScrolled ? "py-2" : "py-6"
-      }`}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-40">
       <div
-        className={`relative rounded-4xl border border-blue-950 px-4 py-2 ml-4 mr-4 transition-all duration-500 shadow-xl shadow-slate-600/30 ${
+        className={`mx-4 mt-4 rounded-2xl border border-blue-950 px-4 py-2 transition-all duration-500 shadow-xl shadow-slate-600/30 ${
           isScrolled
-            ? "bg-transparent/90 backdrop-blur-md"
-            : "bg-transparent/70 backdrop-blur-sm"
+            ? "bg-slate-900/90 backdrop-blur-md"
+            : "bg-slate-900/70 backdrop-blur-sm"
         }`}
       >
         <div className="flex items-center justify-between">
@@ -56,13 +55,13 @@ function Navbar() {
           <div className="hidden md:flex gap-4">
             <Link
               to="/register"
-              className="text-sm py-2 font-semibold text-gray-300 hover:text-teal-600"
+              className="text-sm py-2 text-gray-300 hover:text-teal-600"
             >
               Register
             </Link>
             <Link
               to="/login"
-              className="px-3 py-1.5 rounded-full bg-linear-to-r from-purple-400 to-pink-300 text-gray-200 hover:from-purple-500 hover:to-pink-400"
+              className="px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-400 to-pink-300 text-gray-900"
             >
               Login
             </Link>
@@ -78,33 +77,32 @@ function Navbar() {
 
         {menuOpen && (
           <div className="md:hidden mt-4 rounded-xl bg-slate-800/90 backdrop-blur-md">
-            <ul className="flex flex-col gap-4 text-gray-300 font-semibold">
+            <ul className="flex flex-col gap-4 p-4 text-gray-300 font-semibold">
               <li>
-                <Link to="/" onClick={() => setMenuOpen(false)}>
+                <Link className="block py-2" to="/">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/" onClick={() => setMenuOpen(false)}>
+                <Link className="block py-2" to="/">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/" onClick={() => setMenuOpen(false)}>
+                <Link className="block py-2" to="/">
                   Employee
                 </Link>
               </li>
               <hr className="border-gray-700" />
               <li>
-                <Link to="/register" onClick={() => setMenuOpen(false)}>
+                <Link className="block py-2" to="/register">
                   Register
                 </Link>
               </li>
               <li>
                 <Link
                   to="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-center rounded-full bg-linear-to-r from-purple-400 to-purple-600 text-gray-900"
+                  className="block py-2 text-center rounded-full bg-gradient-to-r from-purple-400 to-purple-600 text-gray-900"
                 >
                   Login
                 </Link>
@@ -113,7 +111,6 @@ function Navbar() {
           </div>
         )}
       </div>
-      {/* </div> */}
     </nav>
   );
 }

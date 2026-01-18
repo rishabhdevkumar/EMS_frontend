@@ -9,39 +9,37 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
- const handleLogin = async (e) => {
-  e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await API.post("/api/auth/login", {
-      email,
-      password,
-    });
+      const res = await API.post("/api/auth/login", {
+        email,
+        password,
+      });
 
-    console.log("LOGIN RESPONSE 👉", res.data);
+      console.log("LOGIN RESPONSE 👉", res.data);
 
-    const { token, role, user } = res.data.data;
+      const { token, role, user } = res.data.data;
 
-    localStorage.setItem("token", token);
-    localStorage.setItem("role", role);
-    localStorage.setItem("userName", user.name); 
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("userName", user.name);
 
-    if (role === "admin") {
-      navigate("/admindashboard");
-    } else {
-      navigate("/employee/dashboard");
+      if (role === "admin") {
+        navigate("/admindashboard");
+      } else {
+        navigate("/employee/dashboard");
+      }
+    } catch (error) {
+      console.error("LOGIN ERROR 👉", error);
+      alert("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
-
-  } catch (error) {
-    console.error("LOGIN ERROR 👉", error);
-    alert("Invalid email or password");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900">
@@ -49,7 +47,6 @@ function Login() {
         <header className="text-2xl text-purple-700 text-center mb-6 font-semibold">
           Login
         </header>
-
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-500 mb-1">
@@ -63,7 +60,6 @@ function Login() {
               className="w-full px-3 py-2 text-gray-100 border border-slate-700 rounded-md focus:outline-none focus:ring-1 focus:ring-purple-200 bg-transparent"
             />
           </div>
-
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-500 mb-1">
               Password
@@ -76,7 +72,6 @@ function Login() {
               className="w-full px-3 py-2 border border-slate-700 text-gray-100 rounded-md focus:outline-none focus:ring-1 focus:ring-purple-200 bg-transparent"
             />
           </div>
-
           <div className="mb-4 flex items-center justify-between">
             <label className="inline-flex items-center text-sm text-gray-600">
               <input type="checkbox" className="form-checkbox" />
@@ -86,7 +81,6 @@ function Login() {
               Forgot Password?
             </a>
           </div>
-
           <button
             type="submit"
             disabled={loading}
@@ -94,7 +88,6 @@ function Login() {
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>
-
           <p className="text-gray-700 mt-4 text-sm text-center">
             Create an Account?{" "}
             <Link to="/register" className="text-gray-500 font-medium">
